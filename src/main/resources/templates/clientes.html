@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tabla Clientes</title>
+<link rel="stylesheet"
+	th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+<link rel="stylesheet"
+	th:href="@{/webjars/fontawesome/css/font-awesome.min.css}">
+<link rel="stylesheet" th:href="@{/css/footer.css}">
+<link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+	<div th:replace="layout/navbar :: navbar"></div>
+	<div class="container-fluid">
+		<div class="row justify-content-center">
+			<div class="table-responsive-md col-11 my-5 shadow p-4 bg-white rounded">
+				<h1 class="text-center my-4">Tabla Clientes</h1>
+				<table class="table table-hover content-table table-bordered">
+					<thead class="bg-info">
+						<tr>
+							<th scope="col">#</th>
+							<th scope="col">Tipo de Documento</th>
+							<th scope="col">Numero de Documento</th>
+							<th scope="col">Nombre y Apellido</th>
+							<th scope="col">Correo</th>
+							<th scope="col">Fecha de Nacimiento</th>
+							<th scope="col">Fecha de Ultima Compra</th>
+							<th scope="col">Edad</th>
+							<th scope="col">Telefono</th>
+							<th scope="col">Datos Adicionales Cliente</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="cliente, i: ${listado}">
+							<th scope="row" th:text="${i.index + 1}"></th>
+							<td th:text="${cliente.tipoDocumento}"></td>
+							<td th:text="${cliente.nroDocumento}"></td>
+							<td th:text="${#strings.toUpperCase(cliente.nombreApellido)} "></td>
+							<td th:text="${cliente.email}"></td>
+							<td
+								th:text="${#temporals.format(cliente.fechaNacimiento, 'dd/MM/yyyy')}"></td>
+							<td
+								th:text="${#temporals.format(cliente.fechaUltimaCompra, 'dd-MM-yyyy')}"></td>
+							<td th:text="${cliente.edad}"></td>
+							<td
+								th:text="${cliente.codigoAreaTelefono} + '-' + ${cliente.nroTelefono}"></td>
+							<td
+								th:utext="'T desde última compra: ' + ${cliente.getTiempoTranscurridoUltimaCompra()} + '<br/> T desde cumpleaños: ' + ${cliente.getTiempoTranscurridoEnDiasFechaNacimiento} + ' días<br/> T hasta cumpleaños: ' + ${cliente.getTiempoProximoCumple}"></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	<div th:replace="layout/footer :: footer"></div>
+</body>
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+</html>
