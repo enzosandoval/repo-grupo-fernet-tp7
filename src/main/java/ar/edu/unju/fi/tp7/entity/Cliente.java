@@ -14,11 +14,14 @@ import org.springframework.stereotype.Component;
 
 import java.time.temporal.ChronoUnit;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -73,6 +76,10 @@ public class Cliente implements Serializable {
 	@Column(name = "fecha_ultima_compra")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate fechaUltimaCompra;
+
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "cue_id")
+	private Cuenta cuenta;
 
 	public Cliente() {
 	}
@@ -318,13 +325,21 @@ public class Cliente implements Serializable {
 		this.fechaUltimaCompra = fechaUltimaCompra;
 	}
 
+	public Cuenta getCuenta() {
+		return cuenta;
+	}
+
+	public void setCuenta(Cuenta cuenta) {
+		this.cuenta = cuenta;
+	}
+
 	@Override
 	public String toString() {
 		return "Cliente [id=" + id + ", tipoDocumento=" + tipoDocumento + ", nroDocumento=" + nroDocumento
 				+ ", nombreApellido=" + nombreApellido + ", email=" + email + ", password=" + password
 				+ ", fechaNacimiento=" + fechaNacimiento + ", edad=" + edad + ", codigoAreaTelefono="
 				+ codigoAreaTelefono + ", nroTelefono=" + nroTelefono + ", fechaUltimaCompra=" + fechaUltimaCompra
-				+ "]";
+				+", cuenta=" + cuenta + "]";
 	}
 
 }
