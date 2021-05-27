@@ -7,10 +7,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import ar.edu.unju.fi.tp7.entity.Producto;
 import ar.edu.unju.fi.tp7.repository.ProductoRepository;
@@ -70,5 +74,24 @@ public class ProductoServiceImp implements IProductoService {
 		}
 		return producto;
 	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public Page<Producto> findAll(Pageable pagable) {
+		LOGGER.info("SERVICE: ProductoService");
+		LOGGER.info("METHOD: findAll()");
+		LOGGER.info("RESULT: Página de productos");
+		return productoRepository.findAll(pagable);
+	}
+
+	@Override
+	public void borrar(long id) {
+		LOGGER.info("SERVICE: ProductoService");
+		LOGGER.info("METHOD: borrar()");
+		LOGGER.info("RESULT: " + id);
+		productoRepository.deleteById(id);
+	}
+
+	
 
 }
