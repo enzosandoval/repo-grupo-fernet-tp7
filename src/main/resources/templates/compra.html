@@ -20,8 +20,10 @@
 			<div class="form-group row">
 				<label for="codigo">Producto</label>
 				<div class="col-sm-10">
-					<select class="form-control" name="codigo" id="codigo" th:field="*{producto.codigo}">
-						<option th:each=" producto: ${productos}" th:value="${producto.codigo}"><span
+					<select class="form-control" name="codigo" id="codigo"
+						th:field="*{producto.codigo}">
+						<option th:each=" producto: ${productos}"
+							th:value="${producto.codigo}"><span
 								th:text="${producto.nombre} + '-'"></span> <span
 								th:text="${producto.stock} + ' disponibles'"></span>
 						</option>
@@ -36,11 +38,34 @@
 				</div>
 			</div>
 			<div class="d-flex justify-content-center mx-5 mb-4">
-			<input class="btn btn-primary btn-block p-2 mx-3" type="submit"
-				value="Enviar">
-		</div>
+				<input class="btn btn-primary btn-block p-2 mx-3" type="submit"
+					value="Enviar">
+			</div>
 	</div>
 	<div th:replace="layout/footer :: footer"></div>
+	<script type="text/javascript">
+	$('button[type="submit"]').click(function (event) {
+        event.preventDefault();
+
+        $.post("/email", {'email': $('#email').val()}, function () {
+            iziToast.show({
+                title: 'Success',
+                message: 'Provided email address is valid',
+                position: 'topRight',
+                timeout: 500000,
+                color: 'green'
+            });
+
+        }).fail(function () {
+            iziToast.show({
+                title: 'Fail',
+                message: 'Limite excedido',
+                position: 'topRight',
+                color: 'red'
+            });
+        });
+    });
+</script>
 </body>
 <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>

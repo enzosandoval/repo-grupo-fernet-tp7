@@ -13,6 +13,8 @@ import javax.persistence.Table;
 
 import org.springframework.stereotype.Component;
 
+import javax.validation.constraints.NotBlank;
+
 /**
  * @author Team Fernet
  *
@@ -28,6 +30,7 @@ public class Producto {
 	@Column(name = "prod_codigo")
 	private long codigo;
 
+	@NotBlank(message = "Nombre real requerido")
 	@Column(name = "prod_nombre")
 	private String nombre;
 

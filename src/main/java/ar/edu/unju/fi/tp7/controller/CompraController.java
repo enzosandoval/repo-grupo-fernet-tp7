@@ -47,12 +47,17 @@ public class CompraController {
 	@PostMapping("/compra/guardar")
 	public ModelAndView saveCompra(@ModelAttribute("compra") Compra compra) throws Exception {
 
+		ModelAndView mav = new ModelAndView("tablacompras");
+		
 		producto = productoService.buscarProducto(compra.getProducto().getCodigo());
 		producto.setStock(producto.getStock() - compra.getCantidad());
-		productoService.guardar(producto);
+		
 		compra.setTotal(producto.getPrecio() * compra.getCantidad());
+		compra.setProducto(producto);
+		
+		productoService.guardar(producto);
 		compraService.guardarCompra(compra);
-		ModelAndView mav = new ModelAndView("tablacompras");
+		
 		mav.addObject("compras", compraService.obtenerCompras());
 		return mav;
 	}
