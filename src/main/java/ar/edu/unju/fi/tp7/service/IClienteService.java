@@ -5,6 +5,9 @@ package ar.edu.unju.fi.tp7.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import ar.edu.unju.fi.tp7.entity.Cliente;
 
 /**
@@ -18,5 +21,9 @@ public interface IClienteService {
 	public Cliente obtenerCliente(int dni);
 	
 	public List<Cliente> obtenerClientes();
+
+	public Page<Cliente> findAll(Pageable pagable);
+
+	public void borrar(long id);
 	
 }

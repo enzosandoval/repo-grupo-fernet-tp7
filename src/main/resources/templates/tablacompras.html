@@ -14,6 +14,7 @@
 	th:href="@{/webjars/fontawesome/css/font-awesome.min.css}"></link>
 <body>
 	<div th:replace="layout/navbar :: navbar"></div>
+	<div class="container-fluid">
 	<div class="col-xs-12" style="height: 60px;"></div>
 	<div th:if="${compras.size > 0}" class="container-fluid">
 		<h2>Compras</h2>
@@ -45,6 +46,7 @@
 				</table>
 			</div>
 		</div>
+	</div>
 	</div>
 	<div th:if="${compras.size == 0}"
 		class="row justify-content-center text-center">

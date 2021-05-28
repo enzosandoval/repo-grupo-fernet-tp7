@@ -11,6 +11,10 @@ body {
 	background-color: #e7e7e7;
 }
 
+.container-fluid{
+	min-height: 100vh;
+}
+
 /* Estilos para las cards de Bootstrap */
 .card-custom {
 	overflow: hidden;

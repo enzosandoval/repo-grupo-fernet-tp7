@@ -9,7 +9,10 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import ar.edu.unju.fi.tp7.entity.Cliente;
 import ar.edu.unju.fi.tp7.repository.ClienteRepository;
@@ -54,6 +57,23 @@ public class ClienteServiceImp implements IClienteService {
 		Cliente cliente = clienteRepository.findByNroDocumento(dni);
 		LOGGER.info("METHOD: Cliente: " + cliente.getNombreApellido());
 		return cliente;
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public Page<Cliente> findAll(Pageable pagable) {
+		LOGGER.info("SERVICE: ClienteService");
+		LOGGER.info("METHOD: findAll()");
+		LOGGER.info("RESULT: Página de clientes");
+		return clienteRepository.findAll(pagable);
+	}
+
+	@Override
+	public void borrar(long id) {
+		LOGGER.info("SERVICE: ClienteService");
+		LOGGER.info("METHOD: borrar()");
+		LOGGER.info("RESULT: " + id);
+		clienteRepository.deleteById(id);
 	}
 
 }

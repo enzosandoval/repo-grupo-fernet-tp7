@@ -14,46 +14,208 @@
 <body>
 	<div th:replace="layout/navbar :: navbar"></div>
 	<div class="container-fluid">
-		<div class="row justify-content-center">
-			<div class="table-responsive-md col-11 my-5 shadow p-4 bg-white rounded">
-				<h1 class="text-center my-4">Tabla Clientes</h1>
-				<table class="table table-hover content-table table-bordered">
-					<thead class="bg-info">
-						<tr>
-							<th scope="col">#</th>
-							<th scope="col">Tipo de Documento</th>
-							<th scope="col">Numero de Documento</th>
-							<th scope="col">Nombre y Apellido</th>
-							<th scope="col">Correo</th>
-							<th scope="col">Fecha de Nacimiento</th>
-							<th scope="col">Fecha de Ultima Compra</th>
-							<th scope="col">Edad</th>
-							<th scope="col">Telefono</th>
-							<th scope="col">Datos Adicionales Cliente</th>
+		<div class="col-xs-12" style="height: 30px;"></div>
+		<h2>CLIENTES</h2>
+		
+			<div class="col-12">				
+				<table class="table table-bordered table-responsive p-3">
+					<thead class="thead-dark">
+						<tr class="text-center">
+							<th style="width: 6%">ID</th>
+							<th>Tipo Documento</th>
+							<th>Nro Documento</th>
+							<th>Nombre Apellido</th>
+							<th>Correo</th>
+							<th>Password</th>
+							<th>Fecha Nac</th>
+							<th>Telefono</th>
+							<th>Ultima Compra</th>
+							<th style="width: 6%">Editar</th>
+							<th style="width: 6%">Borrar</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr th:each="cliente, i: ${listado}">
-							<th scope="row" th:text="${i.index + 1}"></th>
+						<tr th:each="cliente : ${clientes}">
+							<td th:text="${cliente.id}"></td>
 							<td th:text="${cliente.tipoDocumento}"></td>
 							<td th:text="${cliente.nroDocumento}"></td>
-							<td th:text="${#strings.toUpperCase(cliente.nombreApellido)} "></td>
+							<td th:text="${cliente.nombreApellido}"></td>
 							<td th:text="${cliente.email}"></td>
-							<td
-								th:text="${#temporals.format(cliente.fechaNacimiento, 'dd/MM/yyyy')}"></td>
-							<td
-								th:text="${#temporals.format(cliente.fechaUltimaCompra, 'dd-MM-yyyy')}"></td>
-							<td th:text="${cliente.edad}"></td>
+							<td th:text="${cliente.password}"></td>
+							<td th:text="${cliente.fechaNacimiento}"></td>
 							<td
 								th:text="${cliente.codigoAreaTelefono} + '-' + ${cliente.nroTelefono}"></td>
-							<td
-								th:utext="'T desde última compra: ' + ${cliente.getTiempoTranscurridoUltimaCompra()} + '<br/> T desde cumpleaños: ' + ${cliente.getTiempoTranscurridoEnDiasFechaNacimiento} + ' días<br/> T hasta cumpleaños: ' + ${cliente.getTiempoProximoCumple}"></td>
+							<td th:text="${cliente.fechaUltimaCompra}"></td>
+							<td><a data-toggle="modal" data-target="#updateModal"
+								class="btn btn-warning"
+								th:attr="data-target='#updateModal'+${cliente.id}"><i
+									class="fa fa-edit"></i> </a> <!--#Modal form for Cliente update-->
+								<div class="myFormUpdate">
+									<form th:action="@{/cliente/update}" method="POST"
+										class="form_content" enctype="multipart/form-data">
+										<div class="modal fade" th:id="updateModal+${cliente.id}"
+											id="updateModal" tabindex="-1" role="dialog"
+											aria-labelledby="updateModalLabel" aria-hidden="true">
+											<div class="modal-dialog" role="document">
+												<div class="modal-content">
+													<div class="modal-header">
+														<h4 class="modal-title" id="updateModalLabel">Update
+															Cliente</h4>
+														<button type="button" class="close" data-dismiss="modal"
+															aria-label="Close">
+															<span aria-hidden="true">&times;</span>
+														</button>
+													</div>
+													<div class="modal-body">
+														<div class="form-group">
+															<input type="hidden" class="form-control" id="id"
+																th:name="id" th:value="*{cliente.id}" />
+														</div>
+														<div class="form-group">
+															<label for="tipoDocumento" class="col-form-label">Tipo
+																Documento</label>
+															<select class="custom-select" id="tipoDocumento"
+																th:name="tipoDocumento" th:required="true">
+																<option th:value="*{cliente.tipoDocumento}" selected>Seleccione...</option>
+																<option value="DNI">DNI</option>
+																<option value="Pasaporte">Pasaporte</option>
+															</select>
+														</div>
+														<div class="form-group">
+															<label for="numeroDocumento" class="col-form-label">Numero
+																Documento</label>
+															<!-- th:value es el placeholder ctmm!! -->
+															<input type="number" class="form-control"
+																id="numeroDocumento" th:name="nroDocumento"
+																th:value="*{cliente.nroDocumento}" th:required="true">
+														</div>
+														<div class="form-group">
+															<label for="nombreApellido" class="col-form-label">Nombre
+																y Apellido</label>
+															<input type="text" class="form-control"
+																id="nombreApellido" th:name="nombreApellido"
+																th:value="*{cliente.nombreApellido}" th:required="true">
+														</div>
+														<div class="form-group">
+															<label for="email" class="col-form-label">Correo</label>
+															<input type="email" class="form-control" id="email"
+																th:name="email" th:value="*{cliente.email}"
+																th:required="true">
+														</div>
+														<div class="form-group">
+															<label for="password" class="col-form-label">Password</label>
+															<input type="password" class="form-control" id="password"
+																th:name="password" th:value="*{cliente.password}"
+																th:required="true">
+														</div>
+														<div class="form-group">
+															<label for="fechaNacimiento" class="col-form-label">Fecha
+																Nacimiento</label>
+															<div class="input-group date" id="fechaNacimiento">
+																<input type="date" class="form-control"
+																	th:name="fechaNacimiento"
+																	th:value="*{cliente.fechaNacimiento}"
+																	th:required="true" />
+															</div>
+														</div>
+														<div class="form-group">
+															<label for="codigoAreaTelefono" class="col-form-label">Codigo
+																Area</label>
+															<input type="number" class="form-control"
+																id="codigoAreaTelefono" th:name="codigoAreaTelefono"
+																th:value="*{cliente.codigoAreaTelefono}"
+																th:required="true">
+														</div>
+														<div class="form-group">
+															<label for="numeroTelefono" class="col-form-label">Numero
+																Telefono</label>
+															<input type="number" class="form-control"
+																id="numeroTelefono" placeholder="Telefono"
+																th:name="nroTelefono" th:value="*{cliente.nroTelefono}"
+																th:required="true">
+														</div>
+														<div class="form-group">
+															<label for="fechaUltimaCompra" class="col-form-label">Fecha
+																Ultima Compra</label>
+															<div class="input-group date" id="fechaUltimaCompra">
+																<input type="date" class="form-control"
+																	th:name="fechaUltimaCompra"
+																	th:value="*{cliente.fechaUltimaCompra}"
+																	th:required="true" />
+															</div>
+														</div>
+													</div>
+													<div class="modal-footer">
+														<button type="button" class="btn btn-secondary"
+															data-dismiss="modal">Close</button>
+														<input type="submit" class="btn btn-primary" value="Save" />
+													</div>
+												</div>
+											</div>
+										</div>
+									</form>
+								</div></td>
+							<td><a data-toggle="modal" data-target="#removeModal"
+								class="btn btn-danger delBtn"
+								th:attr="data-target='#removeModal'+${cliente.id}"><i
+									class="fa fa-trash"></i>
+							</a> <!-- #Modal for removing -->
+								<div class="modal fade" th:id="removeModal+${cliente.id}"
+									id="removeModal" tabindex="-1" role="dialog"
+									aria-labelledby="removeModalCenterTitle" aria-hidden="true">
+									<div class="modal-dialog modal-dialog-centered" role="document">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h4 class="modal-title" id="removeModalCenterTitle">Eliminar
+													Cliente</h4>
+												<button type="button" class="close" data-dismiss="modal"
+													aria-label="Close">
+													<span aria-hidden="true">&times;</span>
+												</button>
+											</div>
+											<div class="modal-body">
+												<p class="alert alert-danger">
+													Are you sure you want to delete <span
+														th:text="${cliente.nombreApellido}"></span>?
+												</p>
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-secondary"
+													data-dismiss="modal">Close</button>
+												<a th:href="@{/cliente/delete/{id}(id=${cliente.id})}"
+													class="btn btn-danger" id="delRef">Delete</a>
+											</div>
+										</div>
+									</div>
+								</div></td>
 						</tr>
 					</tbody>
 				</table>
+				<!-- Pagination -->
+				<div class="row">
+					<div class="col-md-2"></div>
+					<div class="col-md-8">
+						<nav aria-label="Pagination">
+							<ul class="pagination justify-content-center">
+								<li class="page-item"
+									th:classappend="${prev == 0 ? 'disabled': ''}"><a
+									class="page-link" th:href="@{|/clientes/?page=${prev}|}">Anterior</a></li>
+								<li class="page-item" th:each="page : ${pages}"
+									th:classappend="${current == page ? 'active': ''}"><a
+									class="page-link" th:href="@{|/clientes/?page=${page}|}"
+									th:text="${page}"></a></li>
+								<li class="page-item"
+									th:classappend="${current == last ? 'disabled': ''}"><a
+									class="page-link" th:href="@{|/clientes/?page=${next}|}">Siguiente</a></li>
+							</ul>
+						</nav>
+					</div>
+					<div class="col-md-2"></div>
+				</div>
 			</div>
 		</div>
 	</div>
+	
 	<div th:replace="layout/footer :: footer"></div>
 </body>
 <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
