@@ -91,16 +91,23 @@ public class ProductoController {
 	public String getResultado(@RequestParam("file") MultipartFile file, RedirectAttributes attributes,
 			@Valid @ModelAttribute("producto") Producto producto, BindingResult result, Model model) throws IOException {
 		 if (result.hasErrors()) {
+			 System.out.println("Error!");
 			 model.addAttribute("producto",producto);
+			 return "productos";
+			 
 		 }
-		
-		byte[] content = file.getBytes();
+		 else {
+			 System.out.println("Else");
+			 byte[] content = file.getBytes();
 		String base64 = Base64.getEncoder().encodeToString(content);
 		producto.setImagen(base64);
 		productoService.guardar(producto);
 
 		
 		return "redirect:/productos";
+		 }
+		
+		
 	}
 
 	/**
