@@ -46,7 +46,7 @@ public class ProductoServiceImp implements IProductoService {
 		LOGGER.info("METHOD: obtenerUltimo()");
 		Producto producto = null;
 		producto = (Producto) productoRepository.findTopByOrderByCodigoDesc();
-		LOGGER.info("RESULT: Ultimo producto: " + producto.getNombre());
+		LOGGER.info("RESULT: Ultimo producto");
 		return producto;
 	}
 

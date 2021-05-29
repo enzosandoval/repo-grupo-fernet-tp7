@@ -15,6 +15,6 @@ import ar.edu.unju.fi.tp7.entity.Producto;
 @Repository
 public interface ProductoRepository extends JpaRepository <Producto, Long>{
 
-	public Object findTopByOrderByCodigoDesc();
+	public Producto findTopByOrderByCodigoDesc();
 	
 }

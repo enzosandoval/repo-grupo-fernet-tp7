@@ -4,6 +4,7 @@
 package ar.edu.unju.fi.tp7.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 import java.util.Map;
@@ -89,25 +90,23 @@ public class ProductoController {
 	 */
 	@PostMapping(value = "/producto/guardar", consumes = "multipart/form-data")
 	public String getResultado(@RequestParam("file") MultipartFile file, RedirectAttributes attributes,
-			@Valid @ModelAttribute("producto") Producto producto, BindingResult result, Model model) throws IOException {
-		 if (result.hasErrors()) {
-			 System.out.println("Error!");
-			 model.addAttribute("producto",producto);
-			 return "productos";
-			 
-		 }
-		 else {
-			 System.out.println("Else");
-			 byte[] content = file.getBytes();
-		String base64 = Base64.getEncoder().encodeToString(content);
-		producto.setImagen(base64);
-		productoService.guardar(producto);
+			@Valid @ModelAttribute("producto") Producto producto, BindingResult result, Model model)
+			throws IOException {
+		if (result.hasErrors()) {
+			System.out.println("Error!");
+			model.addAttribute("producto", producto);
+			return "productos";
 
-		
-		return "redirect:/productos";
-		 }
-		
-		
+		} else {
+			System.out.println("Else");
+			byte[] content = file.getBytes();
+			String base64 = Base64.getEncoder().encodeToString(content);
+			producto.setImagen(base64);
+			productoService.guardar(producto);
+
+			return "redirect:/productos";
+		}
+
 	}
 
 	/**
@@ -139,17 +138,26 @@ public class ProductoController {
 		productoService.borrar(id);
 		return "redirect:/productos";
 	}
-	
+
 	/**
 	 * 
 	 * @return La página que muestra el último producto agregado
-	 * @throws Exception
+	 * @throws Exception una pequeña maña pero no me gusta...
 	 */
 	@GetMapping("/producto/ultimo")
 	public String getUltimoProducto(Model map) throws Exception {
-			map.addAttribute("producto", productoService.obtenerUltimo());
+//		List<Producto> productos = new ArrayList<>();
+//		productos = productoService.obtenerProductos();
+//		if (productos.size() > 0) {
+//			map.addAttribute("producto", productoService.obtenerUltimo());
+//		}
+//		map.addAttribute("productos", productos);
+//		producto = null;
+//		if(productoService.obtenerUltimo() != null) {
+//			producto = productoService.obtenerUltimo();
+//		}
+		map.addAttribute("producto", productoService.obtenerUltimo());
 		return "ultimoproducto";
 	}
-
 
 }
