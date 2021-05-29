@@ -27,7 +27,7 @@ public class Cuenta {
   @Column(name = "cue_saldo")
   private double saldo;
 
-  @Column(name = "cue_fechaCreacion")
+  @Column(name = "cue_fecha_creacion")
   @DateTimeFormat(pattern = "yyyy-MM-dd")
   private LocalDate fechaCreacion;
 

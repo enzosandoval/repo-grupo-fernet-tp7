@@ -39,7 +39,7 @@ public class CompraServiceImp implements ICompraService {
 		LOGGER.info("METHOD: obtenerCompras()");
 		List<Compra> compras = new ArrayList<>();
 		compraRepository.findAll().forEach(compras::add);
-		LOGGER.info("METHOD: Lista tamaño: " +  compras.size());
+		LOGGER.info("RESULT: Lista tamaño: " +  compras.size());
 		return compras;
 	}
 

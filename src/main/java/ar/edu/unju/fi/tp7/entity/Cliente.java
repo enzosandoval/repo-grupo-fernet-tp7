@@ -45,35 +45,35 @@ public class Cliente implements Serializable {
 	@Column(name = "cli_id")
 	private long id;
 
-	@Column(name = "tipo_documento", length = 32, nullable = false)
+	@Column(name = "cli_tipo_documento", length = 32, nullable = false)
 	private String tipoDocumento;
 
-	@Column(name = "numero_documento", length = 8, nullable = false)
+	@Column(name = "cli_numero_documento", length = 8, nullable = false)
 	private int nroDocumento;
 
-	@Column(name = "nombre_apellido", length = 64, nullable = false)
+	@Column(name = "cli_nombre_apellido", length = 64, nullable = false)
 	private String nombreApellido;
 
-	@Column(name = "email", length = 128, nullable = false)
+	@Column(name = "cli_email", length = 128, nullable = false)
 	private String email;
 
-	@Column(name = "password", length = 64, nullable = false)
+	@Column(name = "cli_password", length = 64, nullable = false)
 	private String password;
 
-	@Column(name = "fecha_nac")
+	@Column(name = "cli_fecha_nac")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate fechaNacimiento;
 
-	@Column(name = "edad")
+	@Column(name = "cli_edad")
 	private int edad;
 
-	@Column(name = "codigo_area", nullable = false)
+	@Column(name = "cli_codigo_area", nullable = false)
 	private String codigoAreaTelefono;
 
-	@Column(name = "numero_telefono", nullable = false)
+	@Column(name = "cli_numero_telefono", nullable = false)
 	private int nroTelefono;
 
-	@Column(name = "fecha_ultima_compra")
+	@Column(name = "cli_fecha_ultima_compra")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate fechaUltimaCompra;
 

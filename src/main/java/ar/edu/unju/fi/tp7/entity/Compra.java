@@ -38,10 +38,10 @@ public class Compra implements Serializable {
 	@Column(name = "com_id")
 	private long id;
 
-	@Column(name = "cantidad")
+	@Column(name = "com_cantidad")
 	private int cantidad;
 
-	@Column(name = "total")
+	@Column(name = "com_total")
 	private double total;
 
 	@ManyToOne(fetch = FetchType.LAZY)
