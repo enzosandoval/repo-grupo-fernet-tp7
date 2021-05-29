@@ -99,7 +99,7 @@ public class ClienteController {
 	@PostMapping(value = "/cliente/update")
 	public String getUpdatePage(@ModelAttribute("producto") Cliente cliente) throws Exception {
 		clienteService.guardar(cliente);
-		return "redirect:/clientes";
+		return "redirect:/cliente/lista";
 	}
 	
 	/**
