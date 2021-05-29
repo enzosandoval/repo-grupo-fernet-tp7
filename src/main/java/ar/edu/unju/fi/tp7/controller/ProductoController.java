@@ -139,7 +139,7 @@ public class ProductoController {
 		productoService.borrar(id);
 		return "redirect:/productos";
 	}
-
+	
 	/**
 	 * 
 	 * @return La página que muestra el último producto agregado

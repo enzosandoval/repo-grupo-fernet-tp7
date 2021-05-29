@@ -14,12 +14,14 @@
 </head>
 <body>
 	<div th:replace="layout/navbar.html :: navbar"></div>
-		<!-- style="text-align: justify;" -->
-		<div class="container-fluid">
+	<!-- style="text-align: justify;" -->
+	<div class="container-fluid">
 		<div class="col-xs-12" style="height: 30px;"></div>
 		<h2>GESTION DE PRODUCTOS</h2>
 		<button type="button" class="btn btn-success" data-toggle="modal"
-			data-target="#addProductoModal">Agregar <i class="fa fa-plus"></i></button>
+			data-target="#addProductoModal">
+			Agregar <i class="fa fa-plus"></i>
+		</button>
 		<div class="row">
 			<div class="col-12">
 				<!-- Modal for Agregar Producto -->
@@ -29,7 +31,8 @@
 					<div class="modal-dialog" role="document">
 						<div class="modal-content">
 							<div class="modal-header">
-								<h4 class="modal-title" id="agregarProductoModalLabel">NUEVO PRODUCTO</h4>
+								<h4 class="modal-title" id="agregarProductoModalLabel">NUEVO
+									PRODUCTO</h4>
 								<button type="button" class="close" data-dismiss="modal"
 									aria-label="Close">
 									<span aria-hidden="true">&times;</span>
@@ -45,8 +48,9 @@
 										<label for="nombre" class="col-sm-2 col-form-label">Nombre</label>
 										<div class="col-sm-10">
 											<input type="text" class="form-control" id="nombre"
-												placeholder="Nombre" th:field="*{nombre}" >
-												<span th:if="${#fields.hasErrors('nombre')}" class="help-block" th:errors="*{nombre}"></span>
+												placeholder="Nombre" th:field="*{nombre}">
+											<span th:if="${#fields.hasErrors('nombre')}"
+												class="help-block" th:errors="*{nombre}"></span>
 										</div>
 									</div>
 									<div class="form-group row">
@@ -109,6 +113,7 @@
 							<th style="width: 10%">Imagen</th>
 							<th style="width: 11%">Precio</th>
 							<th>Stock</th>
+							<th style="width: 10%">Comprar</th>
 							<th style="width: 9%">Editar</th>
 							<th style="width: 10%">Eliminar</th>
 						</tr>
@@ -123,7 +128,40 @@
 								th:src="*{'data:image/png;base64,'+producto.imagen}"></td>
 							<td>$ <span
 								th:text="${#numbers.formatDecimal(producto.precio, 0, 'COMMA', 2, 'POINT')}">10.00</span></td>
-								<td th:text="${producto.stock}"></td>
+							<td th:text="${producto.stock}"></td>
+							<td><a data-toggle="modal"
+								data-target="#comprarProductoModal" class="btn btn-primary"
+								th:attr="data-target='#comprarProductoModal'+${producto.codigo}">Comprar<i
+									class="fa fa-shopping-cart"></i>
+							</a>
+								<div class="modal fade"
+									th:id="comprarProductoModal+${producto.codigo}"
+									id="comprarProductoModal" tabindex="-1" role="dialog"
+									aria-labelledby="comprarModalCenterTitle" aria-hidden="true">
+									<div class="modal-dialog modal-dialog-centered" role="document">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h4 class="modal-title" id="comprarModalCenterTitle">COMPRAR
+													PRODUCTO</h4>
+												<button type="button" class="close" data-dismiss="modal"
+													aria-label="Close">
+													<span aria-hidden="true">&times;</span>
+												</button>
+											</div>
+											<div class="modal-body">
+												<p class="alert alert-danger">
+													Comprar producto <span th:text="${producto.nombre}"></span>?
+												</p>
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-secondary"
+													data-dismiss="modal">Cancelar</button>
+												<a th:href="@{/comprar/{id}(id=${producto.codigo})}"
+													class="btn btn-primary" id="delRef">Comprar</a>
+											</div>
+										</div>
+									</div>
+								</div></td>
 							<td><a data-toggle="modal" data-target="#updateModal"
 								class="btn btn-warning"
 								th:attr="data-target='#updateModal'+${producto.codigo}">Editar
@@ -138,7 +176,8 @@
 											<div class="modal-dialog" role="document">
 												<div class="modal-content">
 													<div class="modal-header">
-														<h4 class="modal-title" id="updateModalLabel">ACTUALIZAR PRODUCTO</h4>
+														<h4 class="modal-title" id="updateModalLabel">ACTUALIZAR
+															PRODUCTO</h4>
 														<button type="button" class="close" data-dismiss="modal"
 															aria-label="Close">
 															<span aria-hidden="true">&times;</span>
@@ -191,7 +230,8 @@
 													<div class="modal-footer">
 														<button type="button" class="btn btn-secondary"
 															data-dismiss="modal">Cerrar</button>
-														<input type="submit" class="btn btn-primary" value="Guardar" />
+														<input type="submit" class="btn btn-primary"
+															value="Guardar" />
 													</div>
 												</div>
 											</div>
@@ -210,7 +250,8 @@
 									<div class="modal-dialog modal-dialog-centered" role="document">
 										<div class="modal-content">
 											<div class="modal-header">
-												<h4 class="modal-title" id="removeModalCenterTitle">ELIMINAR PRODUCTO</h4>
+												<h4 class="modal-title" id="removeModalCenterTitle">ELIMINAR
+													PRODUCTO</h4>
 												<button type="button" class="close" data-dismiss="modal"
 													aria-label="Close">
 													<span aria-hidden="true">&times;</span>
@@ -265,7 +306,7 @@
 	image.src = URL.createObjectURL(event.target.files[0]);
 };
 </script>
-<script type="text/javascript">
+	<script type="text/javascript">
 	$(document).ready(function() {
     $('#addProductoModal').bootstrapValidator({
         message: 'This value is not valid',
