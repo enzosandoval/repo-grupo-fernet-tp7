@@ -30,6 +30,8 @@
 							<th>Fecha Nac</th>
 							<th>Telefono</th>
 							<th>Ultima Compra</th>
+							<th>Estado Cuenta</th>
+							<th>Saldo</th>
 							<th style="width: 6%">Editar</th>
 							<th style="width: 6%">Borrar</th>
 						</tr>
@@ -46,6 +48,8 @@
 							<td
 								th:text="${cliente.codigoAreaTelefono} + '-' + ${cliente.nroTelefono}"></td>
 							<td th:text="${cliente.fechaUltimaCompra}"></td>
+							<td th:text="${cliente.cuenta.estado}"></td>
+							<td th:text="${cliente.cuenta.saldo}"></td>
 							<td><a data-toggle="modal" data-target="#updateModal"
 								class="btn btn-warning"
 								th:attr="data-target='#updateModal'+${cliente.id}"><i
