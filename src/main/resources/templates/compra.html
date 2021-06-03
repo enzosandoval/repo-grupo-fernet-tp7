@@ -17,7 +17,7 @@
 	<div class="container">
 		<div class="col-xs-12" style="height: 60px;"></div>
 		<div class="text-center">
-			<h1>COMPRA</h1>
+			<h2>Nueva Compra</h2>
 		</div>
 		<div
 			class="row justify-content-center my-5 shadow p-3 bg-white rounded">
@@ -46,62 +46,61 @@
 						th:text="${compra.producto.marca}"></p>
 					<p class="mb-2 text-muted small"
 						th:text="'Codigo: ' + ${compra.producto.codigo}"></p>
-						
-					<input type="hidden" th:field="*{producto.codigo}" th:name="${compra.producto.codigo}" />
-					<input type="hidden" th:field="*{producto.imagen}" th:name="${compra.producto.imagen}" />
-					<input type="hidden" th:field="*{producto.nombre}" th:name="${compra.producto.nombre}" />
-					<input type="hidden" th:field="*{producto.descripcion}" th:name="${compra.producto.descripcion}"/>
-							
-						<div class="form-group">
-							<div class="table-responsive">
-								<table class="table table-sm table-borderless mb-0">
-									<tbody>
-										<tr>
-											<th class="pl-0 w-25" scope="row"><strong>Descripción:
-											</strong></th>
-											<td><span th:text="${compra.producto.descripcion}"></span></td>
-										</tr>
-										<tr>
-											<th class="pl-0 w-25" scope="row"><strong>Precio:</strong></th>
-											<td>$ <span
-												th:text="${#numbers.formatDecimal(compra.producto.precio, 0, 'COMMA', 2, 'POINT')}">10.00</span></td>
-										</tr>
-										<tr>
-											<th class="pl-0 w-25" scope="row"><strong>Delivery:
-											</strong></th>
-											<td>USA, Europe</td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
-							<div class="table-responsive mb-2">
-								<table class="table table-sm table-borderless">
-									<tbody>
-										<tr>
-											<td class="pl-0 w-25" scope="row"><strong>Cantidad
-											</strong></td>
-										</tr>
-										<tr>
-											<td><select th:if="${compra.producto.stock != 0}"
-												th:field="*{cantidad}">
-													<option
-														th:each="i : ${#numbers.sequence(1, compra.producto.stock)}"
-														th:value="${i}" th:text="${i}">Disponibles</option>
-											</select> <span th:text="${compra.producto.stock} + ' Disponibles'"></span></td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
-							<button type="submit" class="btn btn-primary btn-md mr-1 mb-2"
-								th:disabled="${compra.producto.stock == 0}">Comprar
-								Ahora</button>
-							<button type="button" class="btn btn-light btn-md mr-1 mb-2">
-								<i class="fa fa-shopping-cart pr-2"></i>Agragar al carrito
-							</button>
+					<input type="hidden" th:field="*{producto.codigo}"
+						th:name="${compra.producto.codigo}" />
+					<input type="hidden" th:field="*{producto.imagen}"
+						th:name="${compra.producto.imagen}" />
+					<input type="hidden" th:field="*{producto.nombre}"
+						th:name="${compra.producto.nombre}" />
+					<input type="hidden" th:field="*{producto.descripcion}"
+						th:name="${compra.producto.descripcion}" />
+					<div class="form-group">
+						<div class="table-responsive">
+							<table class="table table-sm table-borderless mb-0">
+								<tbody>
+									<tr>
+										<th class="pl-0 w-25" scope="row"><strong>Descripción:
+										</strong></th>
+										<td><span th:text="${compra.producto.descripcion}"></span></td>
+									</tr>
+									<tr>
+										<th class="pl-0 w-25" scope="row"><strong>Precio:</strong></th>
+										<td>$ <span
+											th:text="${#numbers.formatDecimal(compra.producto.precio, 0, 'COMMA', 2, 'POINT')}">10.00</span></td>
+									</tr>
+									<tr>
+										<th class="pl-0 w-25" scope="row"><strong>Delivery:
+										</strong></th>
+										<td>USA, Europe</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div class="table-responsive mb-2">
+							<table class="table table-sm table-borderless">
+								<tbody>
+									<tr>
+										<td class="pl-0 w-25" scope="row"><strong>Cantidad
+										</strong></td>
+									</tr>
+									<tr>
+										<td><select th:if="${compra.producto.stock != 0}"
+											th:field="*{cantidad}">
+												<option
+													th:each="i : ${#numbers.sequence(1, compra.producto.stock)}"
+													th:value="${i}" th:text="${i}">Disponibles</option>
+										</select> <span th:text="${compra.producto.stock} + ' Disponibles'"></span></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<button type="submit" class="btn btn-primary btn-md mr-1 mb-2"
+						th:disabled="${compra.producto.stock == 0}">Comprar Ahora</button>
+					<a th:href="@{/productos}" class="btn btn-light btn-md mr-1 mb-2">Volver</a>
 				</form>
 			</div>
 		</div>
-	</div>
 	</div>
 	<div class="col-xs-12" style="height: 120px;"></div>
 	<div th:replace="layout/footer :: footer"></div>
